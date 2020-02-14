@@ -220,7 +220,8 @@ spec:
             - --logtostderr=true
             - --cloud-provider=azure
             - --skip-nodes-with-local-storage=false
-            - --node-group-auto-discovery=label:cluster-autoscaler-enabled=true,cluster-autoscaler-name=${RESOURCE_GROUP}
+            - --nodes=1:10:k8s-cluster-vmss
+            # - --node-group-auto-discovery=label:cluster-autoscaler-enabled=true,cluster-autoscaler-name=${RESOURCE_GROUP}
           env:
             - name: ARM_SUBSCRIPTION_ID
               valueFrom:
