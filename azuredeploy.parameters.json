@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"vmName": {
+			"value": "k8s-cluster-master"
+		},
+		"vmssName": {
+			"value": "k8s-cluster-vmss"
+		},
+		"adminUsername": {
+			"value": ""
+		},
+		"adminKey": {
+			"value": ""
+		},
+		"minNodeCount": {
+			"value": 1
+		},
+		"maxNodeCount": {
+			"value": 20
+		},
+		"spClientId": {
+			"value": "xxxxxxxxx-xxxx-xxx-xxxx-xxxxxxxxxxxx"
+		},
+		"spClientSecret": {
+			"value": "xxxxxxxxx-xxxx-xxx-xxxx-xxxxxxxxxxxx"
+		}
+	}
+}
