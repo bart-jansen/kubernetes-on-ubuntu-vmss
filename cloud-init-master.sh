@@ -13,6 +13,9 @@ CLIENT_SECRET=$2
 RESOURCE_GROUP=$3
 SUB=$4
 TENANT=$5
+VMSS_NAME=$6
+MIN_SIZE=$7
+MAX_SIZE=$8
 
 installDeps() {
     # update and upgrade packages
@@ -35,7 +38,7 @@ setupKubeadm() {
     kubeadm init --pod-network-cidr=192.168.0.0/16  --token $KUBEADM_TOKEN
 
     # wait for kubeadm to be successfully configured
-    sleep 30
+    sleep 15
 
     # copy /etc/kubernetes/admin.conf so we can use kubectl
     mkdir -p /root/.kube
@@ -220,7 +223,7 @@ spec:
             - --logtostderr=true
             - --cloud-provider=azure
             - --skip-nodes-with-local-storage=false
-            - --nodes=1:10:k8s-cluster-vmss
+            - --nodes=${MIN_SIZE}:${MAX_SIZE}:${VMSS_NAME}
             # - --node-group-auto-discovery=label:cluster-autoscaler-enabled=true,cluster-autoscaler-name=${RESOURCE_GROUP}
           env:
             - name: ARM_SUBSCRIPTION_ID
