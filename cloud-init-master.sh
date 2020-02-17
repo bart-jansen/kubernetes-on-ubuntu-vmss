@@ -13,9 +13,6 @@ CLIENT_SECRET=$2
 RESOURCE_GROUP=$3
 SUB=$4
 TENANT=$5
-VMSS_NAME=$6
-MIN_SIZE=$7
-MAX_SIZE=$8
 
 installDeps() {
     # update and upgrade packages
@@ -207,7 +204,7 @@ spec:
     spec:
       serviceAccountName: cluster-autoscaler
       containers:
-        - image: k8s.gcr.io/cluster-autoscaler:v1.17.0
+        - image: k8s.gcr.io/cluster-autoscaler:v1.17.1
           imagePullPolicy: Always
           name: cluster-autoscaler
           resources:
@@ -223,8 +220,7 @@ spec:
             - --logtostderr=true
             - --cloud-provider=azure
             - --skip-nodes-with-local-storage=false
-            - --nodes=${MIN_SIZE}:${MAX_SIZE}:${VMSS_NAME}
-            # - --node-group-auto-discovery=label:cluster-autoscaler-enabled=true,cluster-autoscaler-name=${RESOURCE_GROUP}
+            - --node-group-auto-discovery=label:cluster-autoscaler-enabled=true,cluster-autoscaler-name=${RESOURCE_GROUP}
           env:
             - name: ARM_SUBSCRIPTION_ID
               valueFrom:
