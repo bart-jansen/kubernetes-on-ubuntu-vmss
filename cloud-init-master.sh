@@ -204,6 +204,11 @@ spec:
         app: cluster-autoscaler
     spec:
       serviceAccountName: cluster-autoscaler
+      tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+      nodeSelector:
+        node-role.kubernetes.io/master: ""
       containers:
         - image: k8s.gcr.io/cluster-autoscaler:${KUBE_CA_VERSION}
           imagePullPolicy: Always
