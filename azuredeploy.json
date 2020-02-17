@@ -285,7 +285,7 @@
 			"apiVersion": "2017-03-30",
 			"name": "[parameters('vmssName')]",
 			"tags": {
-				"cluster-autoscaler-enabled": true,
+				"cluster-autoscaler-enabled": "true",
 				"cluster-autoscaler-name": "[resourceGroup().name]",
 				"min": "[parameters('minNodeCount')]",
 				"max": "[parameters('maxNodeCount')]",
