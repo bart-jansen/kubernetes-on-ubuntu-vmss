@@ -5,7 +5,7 @@
 # ---------------------------------
 
 KUBEADM_TOKEN='8f07c4.2fa8f9e48b6d4036'
-KUBE_VERSION='1.17.2-00' # specify version of kubeadm, kubelet and kubectl
+KUBE_VERSION='1.17.3-00' # specify version of kubeadm, kubelet and kubectl
 
 # setup params given to sh script
 CLIENT_ID=$1
@@ -49,7 +49,7 @@ cat >/etc/kubernetes/azure.json <<EOL
     "subnetName": "${SUBNET_NAME}",
     "securityGroupName": "",
     "vnetName": "${VNET_NAME}",
-    "vnetResourceGroup": "",
+    "vnetResourceGroup": "${RESOURCE_GROUP}",
     "routeTableName": "",
     "primaryAvailabilitySetName": "",
     "primaryScaleSetName": "",

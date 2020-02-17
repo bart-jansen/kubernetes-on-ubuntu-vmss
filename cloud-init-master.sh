@@ -5,7 +5,8 @@
 # ---------------------------------
 
 KUBEADM_TOKEN='8f07c4.2fa8f9e48b6d4036'
-KUBE_VERSION='1.17.2-00' # specify version of kubeadm, kubelet and kubectl
+KUBE_VERSION='1.17.3-00' # specify version of kubeadm, kubelet and kubectl
+KUBE_CA_VERSION='v1.17.1' # specify version of kubernetes cluster-autoscaler
 
 # setup params given to sh script
 CLIENT_ID=$1
@@ -204,7 +205,7 @@ spec:
     spec:
       serviceAccountName: cluster-autoscaler
       containers:
-        - image: k8s.gcr.io/cluster-autoscaler:v1.17.1
+        - image: k8s.gcr.io/cluster-autoscaler:${KUBE_CA_VERSION}
           imagePullPolicy: Always
           name: cluster-autoscaler
           resources:
