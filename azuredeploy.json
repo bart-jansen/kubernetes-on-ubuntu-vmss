@@ -287,8 +287,8 @@
 			"tags": {
 				"cluster-autoscaler-enabled": true,
 				"cluster-autoscaler-name": "[resourceGroup().name]",
-				"min": 0,
-				"max": 20,
+				"min": "[parameters('minNodeCount')]",
+				"max": "[parameters('maxNodeCount')]",
 				"poolName": "[parameters('vmssName')]"
 			},
 			"dependsOn": [
