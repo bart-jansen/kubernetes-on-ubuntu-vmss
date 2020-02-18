@@ -20,6 +20,9 @@
 		"maxNodeCount": {
 			"value": 20
 		},
+		"vmSize": {
+			"value": "Standard_DS2_v2"
+		},
 		"spClientId": {
 			"value": "xxxxxxxxx-xxxx-xxx-xxxx-xxxxxxxxxxxx"
 		},
