@@ -128,6 +128,7 @@
 		"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]",
 		"vmssSubnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('vmssSubnetName'))]",
 		"osDiskType": "Standard_LRS",
+		"scriptsDir": "scripts",
 		"masterScriptFileName": "cloud-init-master.sh",
 		"vmssScriptFileName": "cloud-init-vmss.sh",
 		"subscriptionId": "[subscription().subscriptionId]",
@@ -271,7 +272,7 @@
 				"autoUpgradeMinorVersion": true,
 				"settings": {
 					"fileUris": [
-						"[concat(parameters('_artifactsLocation'), '/', variables('masterScriptFileName'), parameters('_artifactsLocationSasToken'))]"
+						"[concat(parameters('_artifactsLocation'), '/', variables('scriptsDir'), '/', variables('masterScriptFileName'), parameters('_artifactsLocationSasToken'))]"
 					]
 				},
 				"protectedSettings": {
@@ -375,7 +376,7 @@
 
 								"settings": {
 									"fileUris": [
-										"[concat(parameters('_artifactsLocation'), '/', variables('vmssScriptFileName'), parameters('_artifactsLocationSasToken'))]"
+										"[concat(parameters('_artifactsLocation'), '/', variables('scriptsDir'), '/', variables('vmssScriptFileName'), parameters('_artifactsLocationSasToken'))]"
 									]
 								},
 								"protectedSettings": {
