@@ -124,6 +124,7 @@
 	},
 	"variables": {
 		"publicIpAddressName": "[concat(parameters('vmName'), 'PublicIP' )]",
+		"vmssPublicIpAddressName": "[concat(parameters('vmssName'), 'PublicIP' )]",
 		"networkInterfaceName": "[concat(parameters('vmName'),'NetInt')]",
 		"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]",
 		"vmssSubnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('vmssSubnetName'))]",
@@ -137,7 +138,7 @@
 	"resources": [
 		{
 			"type": "Microsoft.Network/networkInterfaces",
-			"apiVersion": "2019-09-01",
+			"apiVersion": "2019-11-01",
 			"name": "[variables('networkInterfaceName')]",
 			"location": "[parameters('location')]",
 			"dependsOn": [
@@ -199,11 +200,7 @@
 				"dnsSettings": {
 					"domainNameLabel": "[parameters('dnsLabelPrefix')]"
 				},
-				"idleTimeoutInMinutes": 4
-			},
-			"sku": {
-				"name": "Basic",
-				"tier": "Regional"
+				"idleTimeoutInMinutes": 10
 			}
 		},
 		{
@@ -347,14 +344,13 @@
 												"subnet": {
 													"id": "[variables('vmssSubnetRef')]"
 												},
-												"privateIPAllocationMethod": "Dynamic",
-												"publicIPAddressconfiguration": {
-													"name": "vmssPublicip",
+												"publicIPAddressConfiguration": {
+													"name": "[variables('vmssPublicIpAddressName')]",
 													"properties": {
-													"idleTimeoutInMinutes": 10,
-													  "dnsSettings": {
-														"domainNameLabel": "[parameters('vmssDnsLabelPrefix')]"
-													  }
+														"idleTimeoutInMinutes": 10,
+														"dnsSettings": {
+															"domainNameLabel": "[parameters('vmssDnsLabelPrefix')]"
+													  	}
 													}
 												  }
 											}
