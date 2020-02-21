@@ -7,7 +7,7 @@
 			"metadata": {
 				"description": "The base URI where artifacts required by this template are located. When the template is deployed using the accompanying scripts, a private location in the subscription will be used and this value will be automatically generated."
 			},
-			"defaultValue": "https://raw.githubusercontent.com/bart-jansen/kubernetes-on-ubuntu-vmss/master"
+			"defaultValue": "https://raw.githubusercontent.com/bart-jansen/kubernetes-on-ubuntu-vmss/master/"
 		},
 		"_artifactsLocationSasToken": {
 			"type": "securestring",
@@ -29,12 +29,12 @@
 			}
 		},
 		"location": {
-            "type": "string",
-            "defaultValue": "[resourceGroup().location]",
-            "metadata": {
-                "description": "Location for all resources."
-            }
-        },
+			"type": "string",
+			"defaultValue": "[resourceGroup().location]",
+			"metadata": {
+				"description": "Location for all resources."
+			}
+		},
 		"adminUsername": {
 			"type": "string",
 			"metadata": {
@@ -96,6 +96,7 @@
 		},
 		"vmSize": {
 			"type": "string",
+			"defaultValue": "Standard_DS2_v2",
 			"metadata": {
 				"description": "The size of the VM"
 			}
@@ -265,15 +266,13 @@
 			"properties": {
 				"publisher": "Microsoft.Azure.Extensions",
 				"type": "CustomScript",
-				"typeHandlerVersion": "2.1",
+				"typeHandlerVersion": "2.0",
 				"autoUpgradeMinorVersion": true,
-				"settings": {
-					"fileUris": [
-						"[concat(parameters('_artifactsLocation'), '/', variables('scriptsDir'), '/', variables('masterScriptFileName'), parameters('_artifactsLocationSasToken'))]"
-					]
-				},
 				"protectedSettings": {
-					"commandToExecute": "[concat('bash ', variables('masterScriptFileName'), ' ', parameters('spClientId'), ' ', parameters('spClientSecret'), ' ', resourceGroup().name, ' ', variables('subscriptionId'), ' ', variables('tenantId'))]"
+					"commandToExecute": "[concat('bash ', variables('masterScriptFileName'), ' ', parameters('spClientId'), ' ', parameters('spClientSecret'), ' ', resourceGroup().name, ' ', variables('subscriptionId'), ' ', variables('tenantId'))]",
+					"fileUris": [
+						"[concat(parameters('_artifactsLocation'), variables('scriptsDir'), '/', variables('masterScriptFileName'), parameters('_artifactsLocationSasToken'))]"
+					]
 				}
 			}
 		},
@@ -350,38 +349,35 @@
 														"idleTimeoutInMinutes": 10,
 														"dnsSettings": {
 															"domainNameLabel": "[parameters('vmssDnsLabelPrefix')]"
-													  	}
+														}
 													}
-												  }
+												}
 											}
 										}
 									]
 								}
 							}
 						]
-					}, 
+					},
 					"extensionProfile": {
 						"extensions": [
-						  {
-							"name": "customVmssScript",
-							"properties": {
-							 	"publisher": "Microsoft.Azure.Extensions",
-								"type": "CustomScript",
-								"typeHandlerVersion": "2.1",
-								"autoUpgradeMinorVersion": true,
-
-								"settings": {
-									"fileUris": [
-										"[concat(parameters('_artifactsLocation'), '/', variables('scriptsDir'), '/', variables('vmssScriptFileName'), parameters('_artifactsLocationSasToken'))]"
-									]
-								},
-								"protectedSettings": {
-									"commandToExecute": "[concat('bash ', variables('vmssScriptFileName'), ' ', parameters('spClientId'), ' ', parameters('spClientSecret'), ' ', resourceGroup().name, ' ', variables('subscriptionId'), ' ', variables('tenantId'), ' ', parameters('location'), ' ', parameters('vmssSubnetName'), ' ', parameters('virtualNetworkName'))]"
+							{
+								"name": "customVmssScript",
+								"properties": {
+									"publisher": "Microsoft.Azure.Extensions",
+									"type": "CustomScript",
+									"typeHandlerVersion": "2.0",
+									"autoUpgradeMinorVersion": true,
+									"protectedSettings": {
+										"commandToExecute": "[concat('bash ', variables('vmssScriptFileName'), ' ', parameters('spClientId'), ' ', parameters('spClientSecret'), ' ', resourceGroup().name, ' ', variables('subscriptionId'), ' ', variables('tenantId'), ' ', parameters('location'), ' ', parameters('vmssSubnetName'), ' ', parameters('virtualNetworkName'))]",
+										"fileUris": [
+											"[concat(parameters('_artifactsLocation'), variables('scriptsDir'), '/', variables('vmssScriptFileName'), parameters('_artifactsLocationSasToken'))]"
+										]
+									}
 								}
 							}
-						  }
 						]
-					  }
+					}
 				}
 			}
 		}
